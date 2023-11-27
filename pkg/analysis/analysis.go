@@ -220,6 +220,7 @@ func (a *Analysis) RunAnalysis() {
 	semaphore = make(chan struct{}, a.MaxConcurrency)
 	//normalize := normalize.Normalize{}
 	// use active_filters
+	fmt.Println("## activefilters ", activeFilters)
 	for _, filter := range activeFilters {
 		if analyzer, ok := analyzerMap[filter]; ok {
 			semaphore <- struct{}{}
@@ -235,6 +236,7 @@ func (a *Analysis) RunAnalysis() {
 				mutex.Lock()
 				a.Results = append(a.Results, results...)
 				mutex.Unlock()
+				fmt.Println("$$ RunNormalize in activefilters loop ")
 				nresults, nerr := normalize.RunNormalize(analyzerConfig)
 				if nerr != nil {
 					fmt.Println("# nerr : ", nerr)
