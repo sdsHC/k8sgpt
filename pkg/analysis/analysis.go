@@ -26,6 +26,7 @@ import (
 	openapi_v2 "github.com/google/gnostic/openapiv2"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/ai"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/analyzer"
+	"github.com/k8sgpt-ai/k8sgpt/pkg/normalize"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/cache"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/common"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/kubernetes"
@@ -233,6 +234,7 @@ func (a *Analysis) RunAnalysis() {
 				mutex.Lock()
 				a.Results = append(a.Results, results...)
 				mutex.Unlock()
+				nresults, nerr := normalize.Normalize(analyzerConfig)
 				<-semaphore
 			}(analyzer, filter)
 		}
