@@ -2,6 +2,7 @@
 __debug*
 .DS_Store
 k8sgpt*
+skegpt*
 !charts/k8sgpt
 *.vscode
 dist/
