@@ -178,6 +178,12 @@ func (a *Analysis) RunAnalysis() {
 				mutex.Lock()
 				a.Results = append(a.Results, results...)
 				mutex.Unlock()
+				fmt.Println("$$ RunNormalize in no filters loop ")
+				nresults, nerr := normalize.RunNormalize(analyzerConfig)
+				if nerr != nil {
+					fmt.Println("# nerr : ", nerr)
+                                }
+				fmt.Println("## nResult : ", nresults)
 				<-semaphore
 			}(analyzer, &wg, semaphore)
 
@@ -205,6 +211,12 @@ func (a *Analysis) RunAnalysis() {
 					mutex.Lock()
 					a.Results = append(a.Results, results...)
 					mutex.Unlock()
+					fmt.Println("$$ RunNormalize in filters loop ")
+					nresults, nerr := normalize.RunNormalize(analyzerConfig)
+					if nerr != nil {
+						fmt.Println("# nerr : ", nerr)
+                                	}
+					fmt.Println("## nResult : ", nresults)
 					<-semaphore
 				}(analyzer, filter)
 			} else {
