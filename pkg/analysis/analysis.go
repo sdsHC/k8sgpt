@@ -218,7 +218,7 @@ func (a *Analysis) RunAnalysis() {
 	var wg sync.WaitGroup
 	var mutex sync.Mutex
 	semaphore = make(chan struct{}, a.MaxConcurrency)
-	normalize := normalize.Normalize{}
+	//normalize := normalize.Normalize{}
 	// use active_filters
 	for _, filter := range activeFilters {
 		if analyzer, ok := analyzerMap[filter]; ok {

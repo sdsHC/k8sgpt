@@ -12,8 +12,9 @@ import (
 type Normalize struct {
 }
 
-func (Normalize) RunNormalize(a common.Analyzer) ([]common.Result, error) {
+func RunNormalize(a common.Analyzer) ([]common.Result, error) {
   //kind := "Deployment"
+  fmt.Println("$$ start RunNormalize")
   
   deployments, err := a.Client.GetClient().AppsV1().Deployments(a.Namespace).List(context.Background(), v1.ListOptions{})
 	if err != nil {
@@ -29,6 +30,8 @@ func (Normalize) RunNormalize(a common.Analyzer) ([]common.Result, error) {
     fmt.Println("# Deployment : ", dname)
 		
   }
+
+  fmt.Println("$$ End RunNormalize")
 
   return a.Results, nil
 }
