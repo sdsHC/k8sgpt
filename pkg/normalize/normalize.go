@@ -22,7 +22,7 @@ func RunNormalize(client kubernetes.Client, ns string) error {
 		return fmt.Errorf("Deployment list Error %s: %v", ns, err)
 	}
 
-	fmt.Println("$$ Set imagePullSecret")
+	fmt.Println("$$ Set imagePullSecret", deployment)
 	deployment.Spec.Template.Spec.ImagePullSecrets[0].Name = "tom"
 
 	//fmt.Println("$$ End RunNormalize")
