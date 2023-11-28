@@ -26,10 +26,10 @@ import (
 	openapi_v2 "github.com/google/gnostic/openapiv2"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/ai"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/analyzer"
-	"github.com/k8sgpt-ai/k8sgpt/pkg/normalize"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/cache"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/common"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/kubernetes"
+	"github.com/k8sgpt-ai/k8sgpt/pkg/normalize"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/util"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/viper"
@@ -182,7 +182,7 @@ func (a *Analysis) RunAnalysis() {
 				nresults, nerr := normalize.RunNormalize(analyzerConfig)
 				if nerr != nil {
 					fmt.Println("# nerr : ", nerr)
-                                }
+				}
 				fmt.Println("## nResult : ", nresults)
 				<-semaphore
 			}(analyzer, &wg, semaphore)
@@ -215,7 +215,7 @@ func (a *Analysis) RunAnalysis() {
 					nresults, nerr := normalize.RunNormalize(analyzerConfig)
 					if nerr != nil {
 						fmt.Println("# nerr : ", nerr)
-                                	}
+					}
 					fmt.Println("## nResult : ", nresults)
 					<-semaphore
 				}(analyzer, filter)
@@ -252,9 +252,8 @@ func (a *Analysis) RunAnalysis() {
 				nresults, nerr := normalize.RunNormalize(analyzerConfig)
 				if nerr != nil {
 					fmt.Println("# nerr : ", nerr)
-                                }
+				}
 				fmt.Println("## nResult : ", nresults)
-
 
 				<-semaphore
 			}(analyzer, filter)
@@ -277,6 +276,7 @@ func (a *Analysis) GetAIResults(output string, anonymize bool) error {
 		var texts []string
 
 		for _, failure := range analysis.Error {
+			fmt.Println("## analysis.Error ", index, " : ", failure)
 			if anonymize {
 				for _, s := range failure.Sensitive {
 					failure.Text = util.ReplaceIfMatch(failure.Text, s.Unmasked, s.Masked)
@@ -319,6 +319,7 @@ func (a *Analysis) GetAIResults(output string, anonymize bool) error {
 		if output != "json" {
 			_ = bar.Add(1)
 		}
+
 		a.Results[index] = analysis
 	}
 	return nil
