@@ -15,14 +15,15 @@ func RunNormalize(client kubernetes.Client, ns string) error {
 	//kind := "Deployment"
 	//fmt.Println("$$ start RunNormalize")
 
+	fmt.Println("$$ Get Deployment")
+
 	deployment, err := client.GetClient().AppsV1().Deployments("app").Get(context.TODO(), "tom", v1.GetOptions{})
 	if err != nil {
 		return fmt.Errorf("Deployment list Error %s: %v", ns, err)
 	}
 
+	fmt.Println("$$ Set imagePullSecret")
 	deployment.Spec.Template.Spec.ImagePullSecrets[0].Name = "tom"
-
-	
 
 	//fmt.Println("$$ End RunNormalize")
 
