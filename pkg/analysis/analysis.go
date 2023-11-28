@@ -29,7 +29,6 @@ import (
 	"github.com/k8sgpt-ai/k8sgpt/pkg/cache"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/common"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/kubernetes"
-	"github.com/k8sgpt-ai/k8sgpt/pkg/normalize"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/util"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/viper"
@@ -66,7 +65,7 @@ type JsonOutput struct {
 	Results  []common.Result `json:"results"`
 }
 
-func NewAnalysis(backend string, language string, filters []string, namespace string, noCache bool, explain bool, maxConcurrency int, withDoc bool) (*Analysis, error) {
+func NewAnalysis(backend string, language string, filters []string, namespace string, noCache bool, explain bool, maxConcurrency int, withDoc bool, execute int) (*Analysis, error) {
 	var configAI ai.AIConfiguration
 	err := viper.UnmarshalKey("ai", &configAI)
 	if err != nil {
@@ -323,11 +322,11 @@ func (a *Analysis) GetAIResults(output string, anonymize bool) error {
 
 		a.Results[index] = analysis
 	}
-	fmt.Println("$$ RunNormalize in no filters loop ")
-	nerr := normalize.RunNormalize(*a.Client, a.Namespace)
-	if nerr != nil {
-		fmt.Println("# nerr : ", nerr)
-	}
+	// fmt.Println("$$ RunNormalize in no filters loop ")
+	// nerr := normalize.RunNormalize(*a.Client, a.Namespace)
+	// if nerr != nil {
+	// 	fmt.Println("# nerr : ", nerr)
+	// }
 
 	return nil
 }

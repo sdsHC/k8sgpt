@@ -19,6 +19,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/k8sgpt-ai/k8sgpt/pkg/analysis"
+	"github.com/k8sgpt-ai/k8sgpt/pkg/normalize"
 	"github.com/spf13/cobra"
 )
 
@@ -33,6 +34,7 @@ var (
 	anonymize      bool
 	maxConcurrency int
 	withDoc        bool
+	execute        int
 )
 
 // AnalyzeCmd represents the problems command
@@ -46,7 +48,7 @@ var AnalyzeCmd = &cobra.Command{
 
 		// AnalysisResult configuration
 		config, err := analysis.NewAnalysis(backend,
-			language, filters, namespace, nocache, explain, maxConcurrency, withDoc)
+			language, filters, namespace, nocache, explain, maxConcurrency, withDoc, execute)
 		if err != nil {
 			color.Red("Error: %v", err)
 			os.Exit(1)
@@ -62,6 +64,7 @@ var AnalyzeCmd = &cobra.Command{
 			}
 		}
 
+		
 		// print results
 		output, err := config.PrintOutput(output)
 		if err != nil {
@@ -69,6 +72,22 @@ var AnalyzeCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		fmt.Println(string(output))
+
+		if execute != 0 {
+			nconfig, nerr := normalize.NewNormalize(*config)
+			if nerr != nil {
+				color.Red("Error: %v", err)
+				os.Exit(1)
+			}
+			nrerr := nconfig.RunNormalize()
+			if nrerr != nil {
+				color.Red("Error: %v", err)
+				os.Exit(1)
+			}
+
+			fmt.Println("Execute Complete!")
+
+		}
 	},
 }
 
@@ -94,4 +113,6 @@ func init() {
 	AnalyzeCmd.Flags().IntVarP(&maxConcurrency, "max-concurrency", "m", 10, "Maximum number of concurrent requests to the Kubernetes API server")
 	// kubernetes doc flag
 	AnalyzeCmd.Flags().BoolVarP(&withDoc, "with-doc", "d", false, "Give me the official documentation of the involved field")
+	// execute normalize
+	AnalyzeCmd.Flags().IntVarP(&execute, "execute", "x", 0, "Execute based on Guide")
 }
