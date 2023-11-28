@@ -86,15 +86,15 @@ func (c *OpenAIClient) GetCompletion(ctx context.Context, prompt string, promptT
 		return "", err
 	}
 
-	fmt.Println("### Model : ", c.model)
-        fmt.Println("### Role : ", "user")
-        fmt.Println("### Content : ", fmt.Sprintf(promptTmpl, c.language, prompt))
-        fmt.Println("### Temperature : ", c.temperature)
-        fmt.Println("### MaxTokens : ", maxToken)
-        fmt.Println("### PresencePenalty : ", presencePenalty)
-        fmt.Println("### FrequencyPenalty : ", frequencyPenalty)
-        fmt.Println("### TopP : ", topP)
-        fmt.Println("### response : ", resp)
+	// fmt.Println("### Model : ", c.model)
+	// fmt.Println("### Role : ", "user")
+	// fmt.Println("### Content : ", fmt.Sprintf(promptTmpl, c.language, prompt))
+	// fmt.Println("### Temperature : ", c.temperature)
+	// fmt.Println("### MaxTokens : ", maxToken)
+	// fmt.Println("### PresencePenalty : ", presencePenalty)
+	// fmt.Println("### FrequencyPenalty : ", frequencyPenalty)
+	// fmt.Println("### TopP : ", topP)
+	// fmt.Println("### response : ", resp)
 
 	return resp.Choices[0].Message.Content, nil
 }

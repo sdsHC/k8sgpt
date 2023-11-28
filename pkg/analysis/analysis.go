@@ -178,12 +178,12 @@ func (a *Analysis) RunAnalysis() {
 				mutex.Lock()
 				a.Results = append(a.Results, results...)
 				mutex.Unlock()
-				fmt.Println("$$ RunNormalize in no filters loop ")
-				nresults, nerr := normalize.RunNormalize(analyzerConfig)
-				if nerr != nil {
-					fmt.Println("# nerr : ", nerr)
-				}
-				fmt.Println("## nResult : ", nresults)
+				// fmt.Println("$$ RunNormalize in no filters loop ")
+				// nresults, nerr := normalize.RunNormalize(analyzerConfig)
+				// if nerr != nil {
+				// 	fmt.Println("# nerr : ", nerr)
+				// }
+				// fmt.Println("## nResult : ", nresults)
 				<-semaphore
 			}(analyzer, &wg, semaphore)
 
@@ -211,12 +211,12 @@ func (a *Analysis) RunAnalysis() {
 					mutex.Lock()
 					a.Results = append(a.Results, results...)
 					mutex.Unlock()
-					fmt.Println("$$ RunNormalize in filters loop ")
-					nresults, nerr := normalize.RunNormalize(analyzerConfig)
-					if nerr != nil {
-						fmt.Println("# nerr : ", nerr)
-					}
-					fmt.Println("## nResult : ", nresults)
+					// fmt.Println("$$ RunNormalize in filters loop ")
+					// nresults, nerr := normalize.RunNormalize(analyzerConfig)
+					// if nerr != nil {
+					// 	fmt.Println("# nerr : ", nerr)
+					// }
+					// fmt.Println("## nResult : ", nresults)
 					<-semaphore
 				}(analyzer, filter)
 			} else {
@@ -248,12 +248,12 @@ func (a *Analysis) RunAnalysis() {
 				mutex.Lock()
 				a.Results = append(a.Results, results...)
 				mutex.Unlock()
-				fmt.Println("$$ RunNormalize in activefilters loop ")
-				nresults, nerr := normalize.RunNormalize(analyzerConfig)
-				if nerr != nil {
-					fmt.Println("# nerr : ", nerr)
-				}
-				fmt.Println("## nResult : ", nresults)
+				//fmt.Println("$$ RunNormalize in activefilters loop ")
+				// nresults, nerr := normalize.RunNormalize(analyzerConfig)
+				// if nerr != nil {
+				// 	fmt.Println("# nerr : ", nerr)
+				// }
+				// fmt.Println("## nResult : ", nresults)
 
 				<-semaphore
 			}(analyzer, filter)
@@ -277,6 +277,7 @@ func (a *Analysis) GetAIResults(output string, anonymize bool) error {
 
 		for _, failure := range analysis.Error {
 			fmt.Println("## analysis.Error ", index, " : ", failure)
+
 			if anonymize {
 				for _, s := range failure.Sensitive {
 					failure.Text = util.ReplaceIfMatch(failure.Text, s.Unmasked, s.Masked)
@@ -322,5 +323,11 @@ func (a *Analysis) GetAIResults(output string, anonymize bool) error {
 
 		a.Results[index] = analysis
 	}
+	fmt.Println("$$ RunNormalize in no filters loop ")
+	nerr := normalize.RunNormalize(*a.Client, a.Namespace)
+	if nerr != nil {
+		fmt.Println("# nerr : ", nerr)
+	}
+
 	return nil
 }
