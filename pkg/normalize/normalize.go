@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/k8sgpt-ai/k8sgpt/pkg/kubernetes"
+	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -23,8 +24,9 @@ func RunNormalize(client kubernetes.Client, ns string) error {
 	}
 
 	fmt.Println("$$ Set imagePullSecret", deployment)
-	deployment.Spec.Template.Spec.ImagePullSecrets[0].Name = "tom"
 
+	// deployment.Spec.Template.Spec.ImagePullSecrets[0].Name = "tom"
+	deployment.Spec.Template.Spec.ImagePullSecrets = append(deployment.Spec.Template.Spec.ImagePullSecrets, corev1.LocalObjectReference{Name: "tom"})
 	//fmt.Println("$$ End RunNormalize")
 
 	return nil
