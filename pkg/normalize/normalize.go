@@ -51,7 +51,8 @@ func (n *Normalize) RunNormalize() error {
 		return fmt.Errorf("Deployment list Error %s: %v", "app", err)
 	}
 
-	fmt.Println("$$ Set imagePullSecret", deployment)
+	// fmt.Println("$$ Set imagePullSecret", deployment)
+	fmt.Println("$$ Cache data : ", n.Cache)
 
 	// deployment.Spec.Template.Spec.ImagePullSecrets[0].Name = "tom"
 	deployment.Spec.Template.Spec.ImagePullSecrets = append(deployment.Spec.Template.Spec.ImagePullSecrets, corev1.LocalObjectReference{Name: "tom"})
@@ -65,6 +66,7 @@ func (n *Normalize) RunNormalize() error {
 		fmt.Fprintf(os.Stderr, "Error updating Deployment: %v\n", retryErr)
 	}
 	//fmt.Println("$$ End RunNormalize")
+	fmt.Println("$$ Deployment Updated!")
 
 	return nil
 }
