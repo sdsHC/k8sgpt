@@ -11,6 +11,7 @@ const (
         Error: {Explain error here}
         Solution: {Step by step solution, kubectl command here}
         Object: {Related Kubernetes object}
+		Reference: {Related Site URL}
         `
 
 	trivy_vuln_prompt = "Explain the following trivy scan result and the detail risk or root cause of the CVE ID, then provide a solution. Response in %s: %s"
