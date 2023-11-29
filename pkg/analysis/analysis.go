@@ -231,7 +231,7 @@ func (a *Analysis) RunAnalysis() {
 	semaphore = make(chan struct{}, a.MaxConcurrency)
 	//normalize := normalize.Normalize{}
 	// use active_filters
-	fmt.Println("## activefilters ", activeFilters)
+	//fmt.Println("## activefilters ", activeFilters)
 	for _, filter := range activeFilters {
 		if analyzer, ok := analyzerMap[filter]; ok {
 			semaphore <- struct{}{}
@@ -275,7 +275,7 @@ func (a *Analysis) GetAIResults(output string, anonymize bool) error {
 		var texts []string
 
 		for _, failure := range analysis.Error {
-			fmt.Println("## analysis.Error ", index, " : ", failure)
+			//fmt.Println("## analysis.Error ", index, " : ", failure)
 
 			if anonymize {
 				for _, s := range failure.Sensitive {

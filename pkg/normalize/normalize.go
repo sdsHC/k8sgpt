@@ -41,7 +41,7 @@ func (n *Normalize) RunNormalize() error {
 	//fmt.Println("$$ start RunNormalize")
 	client := n.Client
 
-	fmt.Println("$$ Get Deployment")
+	//fmt.Println("$$ Get Deployment")
 
 	//get Deployment Client
 	deploymentClient := client.GetClient().AppsV1().Deployments("app")
@@ -52,7 +52,7 @@ func (n *Normalize) RunNormalize() error {
 	}
 
 	// fmt.Println("$$ Set imagePullSecret", deployment)
-	fmt.Println("$$ Cache data : ", n.Cache)
+	//fmt.Println("$$ Cache data : ", n.Cache.)
 
 	// deployment.Spec.Template.Spec.ImagePullSecrets[0].Name = "tom"
 	deployment.Spec.Template.Spec.ImagePullSecrets = append(deployment.Spec.Template.Spec.ImagePullSecrets, corev1.LocalObjectReference{Name: "tom"})
