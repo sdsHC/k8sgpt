@@ -7,10 +7,9 @@ const (
 	//Solution: {Step by step solution here}
 	//`
 	default_prompt = `Simplify the following Kubernetes error message delimited by triple dashes written in --- %s --- language; --- %s ---.
-        Provide the most possible solution in a step by step style in no more than 2000 characters. Write the output in the following format:
+        Provide the most possible solution in a step by step style in no more than 2500 characters. Write the output in the following format:
         Error: {Explain error here}
         Solution: {Step by step solution, kubectl command here}
-        Object: {Related Kubernetes object}
 		Reference: {Related Site URL}
         `
 
