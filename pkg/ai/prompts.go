@@ -7,8 +7,10 @@ const (
 	//Solution: {Step by step solution here}
 	//`
 	default_prompt = `Simplify the following Kubernetes error message delimited by triple dashes written in --- %s --- language; --- %s ---.
-        Provide the most possible solution in a step by step style in no more than 2500 characters. Write the output in the following format:
-        Error: {Explain error here}
+		Provide the most possible solution in a step by step style in no more than 2000 characters. If container image url has scp-in.com, the container registry is using SCP cloud and ImagePullSecret is mandatory. Write the output in the following format:
+		Error: {Explain error here}
+		Situation: {Explain Situation here}
+		Cause: {Explain Situation here}
         Solution: {Step by step solution, kubectl command here}
 		Reference: {Related Site URL}
         `
